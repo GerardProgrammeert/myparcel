@@ -17,7 +17,7 @@ class CarrierService implements CarrierServiceInterface
      * base url of carrier service api
      * @var string
      */
-    private  $baseUrl = 'https:://carrierurl.com/api';
+    private  $baseUrl = 'https://carrierurl.com/api';
 
     /**
      * A Guzzle Client to Communicatie with api of carriers
