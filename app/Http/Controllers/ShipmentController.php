@@ -27,15 +27,13 @@ class ShipmentController extends Controller
 
         $validated = $request->validated();
 
-        try {
-
+        try 
+        {
             $consignment = $carrierService->postConsignment($validated);
-
         }
-        catch(\Exception $e) {
-
+        catch(\Exception $e) 
+        {
             return response()->json(['error'=>$e->getMessage()], $e->getCode());
-
         }
 
         $shipment = array_merge($validated, $consignment);
