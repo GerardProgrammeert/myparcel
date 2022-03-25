@@ -39,39 +39,25 @@ class CarrierService implements CarrierServiceInterface
      */
     public function postConsignment(array $data){
 
-        //check given data
-        $validator = \Validator::make($data,$this->getValidationRulesShipment());
-
-        //report when data format is not met
-        if($validator->fails()){
-
-            $this->throwException('Give data for shipment is not correctly',400);
-
-        }
-
         //handle to post request
         $response = $this->client->post($this->baseUrl . '/consignment', $this->transformData($data));
 
         //handle when somethong went wrong in the request to api
-        if($response->getStatusCode() >= 400 && $response->getStatusCode() < 500){
-
-
-            $this->throwException('Connection with Carrier API failed',400);
-
+        if($response->getStatusCode() >= 400 && $response->getStatusCode() < 500)
+        {    
+            $this->throwException('Connection with Carrier API failed',400);   
         }
 
         //handle when service is unavailable
-        if($response->getStatusCode() >= 500){
-
-            $this->throwException('Connection with Carrier API failed',500);
-
+        if($response->getStatusCode() >= 500)
+        {
+            $this->throwException('Connection with Carrier API failed',500)
         }
 
         //return a response
-        if($response->getStatusCode() >= 200 && $response->getStatusCode() < 400){
-
-            return json_decode($response->getBody()->getContents(),true);
-
+        if($response->getStatusCode() >= 200 && $response->getStatusCode() < 400)
+        {    
+            return json_decode($response->getBody()->getContents(),true);   
         }
 
     }
@@ -97,17 +83,6 @@ class CarrierService implements CarrierServiceInterface
 
         return $transformed;
     }
-
-    /**
-     * Getter for data structure for a Shipment
-     * @return string[]
-     */
-    protected function getValidationRulesShipment(){
-
-       return ShipmentRules::getValidationRules();
-
-    }
-
 
     /**
      * @param $message
